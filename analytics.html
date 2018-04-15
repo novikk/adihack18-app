@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <title>AdiHack 2018 - Pending orders</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="adi.css">
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    </head>
+
+    <body>
+        <div class="title">
+            Analytics
+        </div>
+        <div class="allpending">
+            <br>
+            Loading...
+        </div>
+        <div class="btns">
+            <a href="/pending.html" class="btn">
+                <img src="img/list.png" alt="orders"><br>
+                Requests
+            </a>
+            <div class="btnselected">
+                <img src="img/analytics.png" alt="orders"><br>
+                Analytics
+            </div>
+        </div>
+
+    <script type="text/javascript">
+        window.setInterval(function() {
+            $.get("http://176.31.100.76:9999/item", function(data) {
+                content = "<br>"
+
+                for (var i = 0; i < data.length; i++) {
+                    content += '<div class="analytics">'
+                    content += '<div class="antitle">'
+                    content += '    '+data[i].name+''
+                    content += '</div>'
+                    content += '<img src="img/user.jpg" class="user" alt="product image">'
+                    content += '<div class="views">'
+                    content += '    '+data[i].views+'<br>'
+                    content += '    <span class="subtitle">VIEWS</span>'
+                    content += '</div>'
+                    content += '<div class="purchases">'
+                    content += '    '+data[i].sales+'<br>'
+                    content += '    <span class="subtitle">PURCHASES</span>'
+                    content += '</div>'
+                    content += '<div style="clear: both"></div>'
+                    content += '</div>'
+                }
+
+                $('.allpending').html(content)
+            })
+        }, 1000)
+    </script>
+    </body>
+</html>

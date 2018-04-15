@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <title>AdiHack 2018 - Pending orders</title>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+        <link rel="stylesheet" href="adi.css">
+        
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    </head>
+
+    <body>
+        <div class="title">
+            Pending requests
+        </div>
+        <div class="allpending">
+            Loading...
+        </div>
+        <div class="btns">
+            <div class="btnselected">
+                <img src="img/list.png" alt="orders"><br>
+                Requests
+            </div>
+            <a href="/analytics.html" class="btn">
+                <img src="img/analytics.png" alt="orders"><br>
+                Analytics
+            </a>
+        </div>
+
+        <script type="text/javascript">
+            function markDone(id) {
+                $.get("http://176.31.100.76:9999/request/" + id + "/done")
+            }
+
+            window.setInterval(function() {
+                $.get("http://176.31.100.76:9999/request", function(data) {
+                    content = ""
+
+                    for (var i = 0; i < data.length; i++) {
+                        content += '<div class="pending">'
+                        content += '    <img src="img/user.jpg" class="user" alt="Adidas User">'
+                        content += '    <div class="info">'
+                        content += '        <span class="username">'+data[i].name_user+'</span><br>'
+                        content += '        <span class="ref">Reference: '+data[i].item_id+'</span>'
+                        content += '    </div>'
+                        content += '    <div class="done" onclick="markDone(\''+data[i].id+'\')">'
+                        content += '        OK'
+                        content += '    </div>'
+                        content += '    <div style="clear: both"></div>'
+                        content += '</div>'
+                    }
+
+                    $('.allpending').html(content)
+                })
+            }, 1000)
+        </script>
+    </body>
+</html>
